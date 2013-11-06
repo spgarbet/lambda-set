@@ -8,6 +8,7 @@ import Text.ParserCombinators.Parsec
 -- in the Lambda set
 lambdaset :: Parser String
 lambdaset = variable <|> parenthesis
+
 -- Unfortunately, an intermediate "parenthesis" holder is needed
 -- for parse disambiguation
 parenthesis :: Parser String
@@ -54,11 +55,21 @@ run p input
 -- Demonstrations
 -- run lambdaset "x"
 -- run lambdaset "(\\x.x)"
--- run lambdaset "(\\x.(xx))(\\x.(xx))"
+-- run lambdaset "(\\x.(xx))(\\x.(xx))" -- The mysterious Omega
 
--- Now for a SKI combinator expression, Sxyz = xz(yz)
+-- Now for a S expression, Sxyz = xz(yz)
 -- run lambdaset "(\\x.(\\y.(\\z.((xz)(yz)))))"
 
--- Obviously at this point, a multiple variable lambda syntax is required
--- and some manner to define a named operator
+-- How about a Y combinator (basic recursion)
+-- run lambdaset "(\\f.((\\x.(f(xx)))(\\x.(f(xx)))))"
+
+-- How about the K expression, Kxy = x
+-- run lambdaset "(\\x.(\\y.x))"
+
+-- Now derive the identity expression in the SKI combinator, via SKS
+-- This is enough to prove the language is Turing complete
+-- run lambdaset "(((\\x.(\\y.(\\z.((xz)(yz)))))(\\x.(\\y.x)))(\\x.(\\y.(\\z.((xz)(yz))))))"
+
+-- If one added integers, a means to name an operator, then ...
+
 
